@@ -14,5 +14,4 @@ jobs:
       with:
         to: ${{ secrets.TELEGRAM_TO }}
         token: ${{ secrets.TELEGRAM_TOKEN }}
-        message: The ${{ github.head_ref }} ${{ github.event_name }} event triggered final step.
-        echo This event is a pull request that had an assignee removed
+        message: The ${{ github.event_name }} ${{ github.ref }} event triggered first step.
