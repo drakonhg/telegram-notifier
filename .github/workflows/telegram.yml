@@ -5,6 +5,18 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
+    - name: get logs id
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+        shell: bash
+      run: |
+        sudo -n apt update -y ||:
+        sudo -n apt install -y jq ||:
+        echo 'JOB_ID<<EOF' >> $GITHUB_ENV
+        curl -s https://api.github.com/repos/tarantool/tarantool/actions/runs/${{ github.run_id }}/jobs | jq -r '.jobs[0].id' | tee -a $GITHUB_ENV
+        echo 'EOF' >> $GITHUB_ENV
+      shell: bash
     - name: checkout commit
       run: |
         git checkout 12301o0525
@@ -14,12 +26,15 @@ jobs:
       with:
         to: ${{ secrets.TELEGRAM_TO }}
         token: ${{ secrets.TELEGRAM_TOKEN }}
-        message: "Working testing failed:\n
-        Job: [ ${{ github.job }} ](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})\n
-        Logs: [ ${{ github.run_id }} ](https://github.com/${{ github.repository }}/runs/${{ github.run_id }})\n
-        Commit: [ ${{ github.sha }}(https://github.com/${{ github.repository }}/commit/${{ github.sha }})\n
-        Branch: [ ${{ github.ref }} ](https://github.com/${{ github.repository }}/tree/${{ github.ref }})
-        History: [commits](https://github.com/${{ github.repository }}/commits/${{ github.sha }})
-        Triggered on: ${{ github.event_name }}
-        Committer: ${{ github.actor }}
+        message: "🔴 Working testing failed:\n
+        *Job*: [ ${{ github.job }} ](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})\n
+        *Logs*: [ ${{ github }} ] (https://github.com/${{ github.repository }}/runs/${{ job.id }})\n
+        *Commit*: [ ${{ github.sha }} ](https://github.com/${{ github.repository }}/commit/${{ github.sha }})\n
+        *Branch*: [ ${{ github.ref }} ](https://github.com/${{ github.repository }}/tree/${{ github.ref }})\n
+        *History*: [ commits ](https://github.com/${{ github.repository }}/commits/${{ github.sha }})\n
+        *Triggered on*: ${{ github.event_name }}\n
+        *Committer*: ${{ github.actor }}\n
+        ---------------- Commit message -------------------
         "
+        format: markdown
+        disable_web_page_preview: true
