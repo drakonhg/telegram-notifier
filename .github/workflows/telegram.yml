@@ -14,4 +14,12 @@ jobs:
       with:
         to: ${{ secrets.TELEGRAM_TO }}
         token: ${{ secrets.TELEGRAM_TOKEN }}
-        message: The ${{ github.event_name }} ${{ github.ref }} event triggered first step.
+        message: "Working testing failed:\n
+        Job: [ ${{ github.job }} ](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})\n
+        Logs: [ ${{ github.run_id }} ](https://github.com/${{ github.repository }}/runs/${{ github.run_id }})\n
+        Commit: [ ${{ github.sha }}(https://github.com/${{ github.repository }}/commit/${{ github.sha }})\n
+        Branch: [ ${{ github.ref }} ](https://github.com/${{ github.repository }}/tree/${{ github.ref }})
+        History: [commits](https://github.com/${{ github.repository }}/commits/${{ github.sha }})
+        Triggered on: ${{ github.event_name }}
+        Committer: ${{ github.actor }}
+        "
