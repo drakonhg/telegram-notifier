@@ -1,28 +1,16 @@
 name: telegram message
-on: [pull_request]
+on: [push]
 jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
     steps:
-    - name: get logs id
-      env:
-        GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
-        shell: bash
-      run: |
-        sudo -n apt update -y ||:
-        sudo -n apt install -y jq ||:
-        echo 'JOB_ID<<EOF' >> $GITHUB_ENV
-        curl -s https://api.github.com/repos/tarantool/tarantool/actions/runs/${{ github.run_id }}/jobs | jq -r '.jobs[0].id' | tee -a $GITHUB_ENV
-        echo 'EOF' >> $GITHUB_ENV
-      shell: bash
     - name: checkout commit
       run: |
         git checkout 12301o0525
     - name: send custom message with args
       uses: appleboy/telegram-action@master
-      if: failure()
+      if: success()
       with:
         to: ${{ secrets.TELEGRAM_TO }}
         token: ${{ secrets.TELEGRAM_TOKEN }}

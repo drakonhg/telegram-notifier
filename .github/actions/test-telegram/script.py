@@ -13,12 +13,14 @@ REQUEST = f'https://api.telegram.org/bot{TOKEN}/'
 
 
 def send_message(chat_id, message):
+    edit_message = message.replace('-', '\\-').replace('_', '\\_')
+
     send_message_url = REQUEST + 'sendMessage'
     send_message_data = {
         'chat_id': chat_id,
         'parse_mode': 'MarkdownV2',
         'disable_web_page_preview': 'true',
-        'text': message.replace('-', '\-').replace(']', '\]').replace('_', '\_')
+        'text': edit_message,
     }
 
     response = requests.post(send_message_url, send_message_data)
