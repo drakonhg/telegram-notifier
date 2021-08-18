@@ -16,12 +16,11 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           to: ${{ secrets.TELEGRAM_TO }}
           message: "🔴 Working testing failed:\n
-          *Job*: [ ${{ github.job }} ](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})\n
+          *Job*: [ ${{ github.job }} ](https://github.com/${{ github.repository }}/actions/runs/${{ 'github.run\\_id' }})\n
           *Logs*: [ ${{ github }} ] (https://github.com/${{ github.repository }}/runs/${{ job.id }})\n
           *Commit*: [ ${{ github.sha }} ](https://github.com/${{ github.repository }}/commit/${{ github.sha }})\n
           *Branch*: [ ${{ github.ref }} ](https://github.com/${{ github.repository }}/tree/${{ github.ref }})\n
           *History*: [ commits ](https://github.com/${{ github.repository }}/commits/${{ github.sha }})\n
           *Triggered on*: ${{ github.event_name }}\n
-          *Committer*: ${{ github.actor }}\n
-          ---------------- Commit message -------------------
+          *Committer*: ${{ github.actor }}\n\n
           "

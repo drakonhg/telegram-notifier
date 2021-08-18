@@ -10,7 +10,7 @@ inputs:
   to: # token variable available in workflow as env var named INPUT_TOKEN
     required: true
     description: Token of the bot that sends message
-  messaage: # message variable available in workflow as env var named INPUT_MESSAGE
+  message: # message variable available in workflow as env var named INPUT_MESSAGE
     required: true
     description: Message that bot will send
 
