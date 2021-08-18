@@ -6,20 +6,22 @@ import requests
 TOKEN = os.environ['INPUT_TOKEN']
 CHAT_ID = os.environ['INPUT_TO']
 MESSAGE = os.environ['INPUT_MESSAGE']
+PAGE_PREVIEW = os.environ['INPUT_DISABLE_WEB_PAGE_PREVIEW']
 
 
 # Static request
 REQUEST = f'https://api.telegram.org/bot{TOKEN}/'
 
 
-def send_message(chat_id, message):
+def send_message(chat_id, message,
+                 disable_web_page_preview=False, markdown='MakrdownV2'):
     edit_message = message.replace('-', '\\-').replace('_', '\\_')
 
     send_message_url = REQUEST + 'sendMessage'
     send_message_data = {
         'chat_id': chat_id,
         'parse_mode': 'MarkdownV2',
-        'disable_web_page_preview': 'true',
+        'disable_web_page_preview': disable_web_page_preview,
         'text': edit_message,
     }
 
@@ -29,4 +31,4 @@ def send_message(chat_id, message):
 
 
 if __name__ == '__main__':
-    send_message(CHAT_ID, MESSAGE)
+    send_message(CHAT_ID, MESSAGE, PAGE_PREVIEW)
