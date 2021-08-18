@@ -18,7 +18,7 @@ def send_message(chat_id, message):
         'chat_id': chat_id,
         'parse_mode': 'MarkdownV2',
         'disable_web_page_preview': 'true',
-        'text': message.encode('utf-8')
+        'text': message.replace('-', '\-').replace(']', '\]').replace('_', '\_')
     }
 
     response = requests.post(send_message_url, send_message_data)

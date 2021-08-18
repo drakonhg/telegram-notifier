@@ -1,7 +1,7 @@
 name: Test Workflow
 on: [push]
 jobs:
-  telegram-python-test:
+  telegram_bot:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -16,8 +16,8 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           to: ${{ secrets.TELEGRAM_TO }}
           message: "🔴 Working testing failed:\n
-          *Job*: [ ${{ github.job }} ](https://github.com/${{ github.repository }}/actions/runs/${{ 'github.run\\_id' }})\n
-          *Logs*: [ ${{ github }} ] (https://github.com/${{ github.repository }}/runs/${{ job.id }})\n
+          *Job*: [ ${{ github.job }} ](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})\n
+          *Logs*: [ ${{ github.job }} ](https://github.com/${{ github.repository }}/runs/${{ job.id }})\n
           *Commit*: [ ${{ github.sha }} ](https://github.com/${{ github.repository }}/commit/${{ github.sha }})\n
           *Branch*: [ ${{ github.ref }} ](https://github.com/${{ github.repository }}/tree/${{ github.ref }})\n
           *History*: [ commits ](https://github.com/${{ github.repository }}/commits/${{ github.sha }})\n
