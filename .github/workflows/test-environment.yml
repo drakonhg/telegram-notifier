@@ -1,12 +1,12 @@
 name: Test Workflow
 on: [push]
 jobs:
-  first-job:
+  telegram-python-test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Run Action
+      - name: Printin Python Results
         # we can give directory path that contains action.yaml or repo address in username/repository_name@version format
         # in our case it would be nashmaniac/create-issue-action@v1.0 where v1.0 is the version of action
         # for now we will give directory path. The directory must contain action.yaml
@@ -15,3 +15,13 @@ jobs:
         with:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           to: ${{ secrets.TELEGRAM_TO }}
+          message: "🔴 Working testing failed:\n
+          *Job*: [ ${{ github.job }} ](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})\n
+          *Logs*: [ ${{ github }} ] (https://github.com/${{ github.repository }}/runs/${{ job.id }})\n
+          *Commit*: [ ${{ github.sha }} ](https://github.com/${{ github.repository }}/commit/${{ github.sha }})\n
+          *Branch*: [ ${{ github.ref }} ](https://github.com/${{ github.repository }}/tree/${{ github.ref }})\n
+          *History*: [ commits ](https://github.com/${{ github.repository }}/commits/${{ github.sha }})\n
+          *Triggered on*: ${{ github.event_name }}\n
+          *Committer*: ${{ github.actor }}\n
+          ---------------- Commit message -------------------
+          "
