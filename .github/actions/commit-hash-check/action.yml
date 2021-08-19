@@ -9,12 +9,11 @@ runs:
   steps:
     - name: 'Check Commit SHA'
       run: |
-        git -c protocol.version=2 fetch --no-tags --prune --progress --no-recurse-submodules --depth=1 origin
+        git pull
+        git branch -r
         if (git cat-file -e ${{ inputs.commit }}) ; then
           echo 'Commit exist'
-          exit 0
         else
           echo 'Commit does not exist'
-          exit 1
         fi
       shell: bash
