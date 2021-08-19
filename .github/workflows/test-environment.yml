@@ -1,4 +1,4 @@
-name: Test Workflow Telegram Bot
+name: 'Test Workflow Telegram Bot'
 on: [push]
 jobs:
   telegram-bot-test:
@@ -11,7 +11,7 @@ jobs:
         with:
           commit: 39cc989
       - name: Add-ons for Telegram action
-      - uses: ./.github/actions/configure_github_envs
+        uses: ./.github/actions/configure_github_envs
         if: always()
       - name: Sending Message to Telegram Chat
         uses: ./.github/actions/test-telegram
