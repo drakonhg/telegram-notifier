@@ -1,6 +1,5 @@
 name: Test Workflow Telegram Bot
-on:
-  pull_request:
+on: [push]
 jobs:
   telegram-bot-test:
     runs-on: ubuntu-latest
@@ -10,7 +9,7 @@ jobs:
       - name: Check Commit SHA
         uses: ./.github/actions/commit-hash-check
         with:
-          commit: ${{ github.event.inputs.commit }}
+          commit: '68970ce'
       - name: Add-ons for Telegram action
         uses: ./.github/actions/configure_github_envs
         if: always()
