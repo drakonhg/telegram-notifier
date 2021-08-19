@@ -1,5 +1,10 @@
 name: Check Commit SHA
-on: [push]
+on:
+  workflow_dispatch:
+    inputs:
+      commit:
+        description: Commit ID
+        required: true
 jobs:
   check-commit:
     runs-on: ubuntu-latest
@@ -9,4 +14,4 @@ jobs:
       - name: Commit SHA check
         uses: ./.github/actions/commit-hash-check
         with:
-          commit: '7485472'
+          commit: ${{ github.event.inputs.commit }}

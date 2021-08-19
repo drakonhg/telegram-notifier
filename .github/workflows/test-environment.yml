@@ -1,11 +1,6 @@
 name: Test Workflow Telegram Bot
 on:
   pull_request:
-  workflow_dispatch:
-    inputs:
-      commit:
-        description: Commit ID
-        required: true
 jobs:
   telegram-bot-test:
     runs-on: ubuntu-latest
