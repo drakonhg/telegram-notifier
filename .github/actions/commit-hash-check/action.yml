@@ -5,8 +5,15 @@ inputs:
     description: 'Commit ID'
     required: false
 runs:
-  using: 'composite'
+  using: "composite"
   steps:
     - name: 'Check Commit SHA'
-      run: ${{ github.action_path }}/commit.sh
+      run: |
+        if (git cat-file -e ${{ inputs.commit }}) ; then
+          echo 'Commit exist'
+          exit 0
+        else
+          echo 'Commit does not exist'
+          exit 1
+        fi
       shell: bash

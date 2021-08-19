@@ -1,4 +1,4 @@
-name: 'Test Workflow Telegram Bot'
+name: Test Workflow Telegram Bot
 on: [push]
 jobs:
   telegram-bot-test:

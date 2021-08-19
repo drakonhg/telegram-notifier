@@ -1,7 +1,7 @@
 name: 'Addons for Telegram action'
 description: 'Gets additional data for Telegram Message'
 runs:
-  using: 'composite'
+  using: "composite"
   steps:
     - name: 'Check branch name'
       run: |
