@@ -9,7 +9,7 @@ jobs:
       - name: Check Commit SHA
         uses: ./.github/actions/commit-hash-check
         with:
-          commit: 39cc989
+          commit: 35fe0f1
       - name: Add-ons for Telegram action
         uses: ./.github/actions/configure_github_envs
         if: always()
