@@ -11,9 +11,10 @@ runs:
       run: |
         git pull
         git branch -r
-        if (git cat-file -e ${{ inputs.commit }}) ; then
+        if git cat-file -e ${{ inputs.commit }} ; then
           echo 'Commit exist'
         else
           echo 'Commit does not exist'
+          exit 1
         fi
       shell: bash

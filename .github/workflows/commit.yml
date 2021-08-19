@@ -9,4 +9,4 @@ jobs:
       - name: Commit SHA check
         uses: ./.github/actions/commit-hash-check
         with:
-          commit: '35fe0f1'
+          commit: '7485472'
