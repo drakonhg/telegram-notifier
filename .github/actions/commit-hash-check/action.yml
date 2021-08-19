@@ -5,7 +5,7 @@ inputs:
     description: 'Commit ID'
     required: false
 runs:
-  using: "composite"
+  using: 'composite'
   steps:
     - name: 'Check Commit SHA'
       run: |
