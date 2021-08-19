@@ -1,0 +1,10 @@
+name: Check Commit SHA
+on: [push]
+jobs:
+  check-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Commit SHA check
+        uses: ./.github/actions/commit-hash-check
+        with:
+          commit: '123434566'

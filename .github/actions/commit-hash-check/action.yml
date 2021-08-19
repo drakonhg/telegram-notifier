@@ -8,6 +8,5 @@ runs:
   using: 'composite'
   steps:
     - name: 'Check Commit SHA'
-      run: |
-        git cat-file -t ${{ inputs.commit }}
+      run: ${{ github.action_path }}/commit.sh
       shell: bash
