@@ -14,8 +14,6 @@ REQUEST = f'https://api.telegram.org/bot{TOKEN}/'
 
 
 def check_branch_name(branch_name):
-    print(branch_name)
-    print(branch_name.split('/')[-1])
     branch_list = [
         branch_name != 'refs/heads/master',
         branch_name != 'refs/heads/1.10',
@@ -24,7 +22,7 @@ def check_branch_name(branch_name):
         ]
 
     if any(branch_list):
-        return CHAT_ID + "_" + branch_name[-1]
+        return CHAT_ID + "_" + branch_name.split('/')[-1]
     return CHAT_ID
 
 def send_message(chat_id, message,
