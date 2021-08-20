@@ -3,6 +3,8 @@ on: [push]
 jobs:
   telegram-bot-test:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -27,6 +29,8 @@ jobs:
           *History*: [ commits ](https://github.com/${{ github.repository }}/commits/${{ github.sha }})\n
           *Triggered on*: ${{ github.event_name }}\n
           *Committer*: ${{ github.actor }}\n
-          ---------------- Commit message -------------------
+          ---------------- Commit message -------------------\n
+          *${{ github.event.head_commit.message }}*\n
+          -----------------------------------------------------
           "
           disable_web_page_preview: true
