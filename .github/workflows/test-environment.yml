@@ -8,13 +8,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      - name: Check Commit SHA
+        uses: ./.github/actions/commit-hash-check
+        with:
+          commit: '123456'
       - name: Add-ons for Telegram action
         uses: ./.github/actions/configure_github_envs
         if: always()
-      - name: Check Commit SHA
-        run: |
-          git checkout 123456
-        shell: bash
       - name: Sending Message to Telegram Chat
         uses: ./.github/actions/test-telegram
         if: failure()
