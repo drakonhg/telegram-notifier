@@ -9,7 +9,7 @@ runs:
   steps:
     - name: 'Check Commit SHA'
       run: |
-        if [ git checkout ${{ inputs.commit }} ]; then
+        if git checkout ${{ inputs.commit }} ; then
           echo 'Commit exist'
           exit 0
         else
