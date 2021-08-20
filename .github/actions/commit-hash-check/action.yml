@@ -9,10 +9,7 @@ runs:
   steps:
     - name: 'Check Commit SHA'
       run: |
-        git pull
-        git branch -r
-        echo ${{ inputs.commit }}
-        if [ git cat-file -e ${{ inputs.commit }} ] ; then
+        if [ git checkout ${{ inputs.commit }} ] ; then
           echo 'Commit exist'
           exit 0
         else
