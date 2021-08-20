@@ -28,7 +28,7 @@ def check_branch_name(branch_name):
 
 def send_message(chat_id, message,
                  disable_web_page_preview=False, markdown='MarkdownV2'):
-    edit_message = message.replace('-', '\\-').replace('_', '\\_')
+    edit_message = message.replace('-', '\\-').replace('_', '\\_').replace('.', '\\.')
 
     send_message_url = REQUEST + 'sendMessage'
     send_message_data = {

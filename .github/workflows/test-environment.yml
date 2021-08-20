@@ -8,6 +8,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          ref:
       - name: Check Commit SHA
         uses: ./.github/actions/commit-hash-check
         with:
