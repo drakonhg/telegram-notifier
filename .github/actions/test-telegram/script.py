@@ -17,6 +17,8 @@ def send_message(chat_id, message,
                  disable_web_page_preview=False, markdown='MakrdownV2'):
     edit_message = message.replace('-', '\\-').replace('_', '\\_')
 
+    print(os.environ["BRANCH_NAME"])
+
     send_message_url = REQUEST + 'sendMessage'
     send_message_data = {
         'chat_id': chat_id,

@@ -31,6 +31,6 @@ jobs:
           *Committer*: ${{ github.actor }}\n
           ---------------- Commit message -------------------\n
           *${{ github.event.head_commit.message }}*\n
-          -----------------------------------------------------
+          ---------------- Commit message -------------------\n
           "
           disable_web_page_preview: true
