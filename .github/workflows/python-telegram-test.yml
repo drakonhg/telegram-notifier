@@ -1,29 +1,31 @@
-name: Test Workflow Telegram Bot
-on: [pull_request]
+name: Test
+on: [push]
 jobs:
-  telegram-bot-test:
+  test:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
         with:
-          ref:
-      - name: Check Commit SHA
-        uses: ./.github/actions/commit-hash-check
-        with:
-          commit: '123456'
-      - name: Add-ons for Telegram action
-        uses: ./.github/actions/configure_github_envs
-        if: always()
-      - name: Sending Message to Telegram Chat
-        uses: ./.github/actions/telegram-notifier
-        if: failure()
-        with:
-          token: ${{ secrets.TELEGRAM_TOKEN }}
-          to: ${{ secrets.TELEGRAM_TO }}
-          message: "🔴 Working testing failed:\n
+          python-version: '3.x'
+      - name: Installing dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+      - name: Set environment variables
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python .github/actions/test-action-telegram/env_setter.py
+#      - run: |
+#          printenv
+      - name: Send Telegram Message
+        env:
+          TO: ${{ secrets.TELEGRAM_TO }}
+          TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
+          MESSAGE: "🔴 Working testing failed:\n
           *Job*: [ ${{ github.job }} ](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})\n
           *Logs*: [ ${{ env.JOB_ID }} ](https://github.com/${{ github.repository }}/runs/${{ env.JOB_ID }})\n
           *Commit*: [ ${{ github.sha }} ](https://github.com/${{ github.repository }}/commit/${{ github.sha }})\n
@@ -35,4 +37,7 @@ jobs:
           *${{ github.event.head_commit.message }}*\n
           ---------------- Commit message -------------------\n
           "
-          disable_web_page_preview: true
+          DISABLE_PAGE_PREVIEW: true
+        run: |
+          printenv
+          python .github/actions/test-action-telegram/script.py

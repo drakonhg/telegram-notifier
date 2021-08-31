@@ -3,6 +3,7 @@ import os
 import requests
 
 # Environments for telegram bot
+print(os.environ.items())
 TOKEN = os.environ['INPUT_TOKEN']
 CHAT_ID = os.environ['INPUT_TO']
 MESSAGE = os.environ['INPUT_MESSAGE']
