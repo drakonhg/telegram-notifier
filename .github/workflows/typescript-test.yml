@@ -1,5 +1,5 @@
-name: Test Workflow Telegram Bot
-on: [pull_request]
+name: Test TypeScript Telegram Bot
+on: [push]
 jobs:
   telegram-bot-test:
     runs-on: ubuntu-latest
@@ -8,17 +8,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        with:
-          ref:
       - name: Check Commit SHA
         uses: ./.github/actions/commit-hash-check
         with:
           commit: '123456'
-      - name: Add-ons for Telegram action
-        uses: ./.github/actions/configure_github_envs
-        if: always()
+#      - name: Add-ons for Telegram action
+#        uses: ./.github/actions/configure_github_envs
+#        if: always()
       - name: Sending Message to Telegram Chat
-        uses: ./.github/actions/telegram-notifier
+        uses: ./.github/actions/typescript-telegram-notifier
         if: failure()
         with:
           token: ${{ secrets.TELEGRAM_TOKEN }}
