@@ -1,0 +1,24 @@
+name: 'Tarantool Telegram Notifier'
+description: 'Sends message if failure to user/channel'
+inputs:
+  token: # it will be available in workflow as environment variable with name INPUT_TOKEN
+    required: true
+    description: 'Token for the bot'
+  to: # token variable available in workflow as env var named INPUT_TOKEN
+    required: true
+    description: 'Token of the bot that sends message'
+  message: # message variable available in workflow as env var named INPUT_MESSAGE
+    required: true
+    description: 'Message that bot will send'
+  disable_web_page_preview:
+    required: false
+    description: 'Preview web page if False, else disable preview'
+  parse_mode:
+    required: false
+    description: 'Mode in which text would be parsed e.g Markdown or HTML modes'
+  github_token:
+    required: false
+    description: 'To make an API requests, and get additional data'
+runs:
+  using: 'node12'
+  main: 'dist/index.js'

@@ -1,0 +1,23 @@
+{
+  "name": "typescript-telegram-notifier",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc && ncc build ./src/main.ts",
+    "format": "prettier --write **/*.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@actions/core": "^1.5.0",
+    "@actions/github": "^5.0.0",
+    "@actions/exec": "^1.1.0"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.30.0",
+    "prettier": "^2.3.2",
+    "typescript": "^4.4.2"
+  }
+}

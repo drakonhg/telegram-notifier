@@ -1,0 +1,38 @@
+name: Test Workflow Telegram Bot
+on: [pull_request]
+jobs:
+  telegram-bot-test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          ref:
+      - name: Check Commit SHA
+        uses: ./.github/actions/commit-hash-check
+        with:
+          commit: '123456'
+      - name: Add-ons for Telegram action
+        uses: ./.github/actions/configure_github_envs
+        if: always()
+      - name: Sending Message to Telegram Chat
+        uses: ./.github/actions/telegram-notifier
+        if: failure()
+        with:
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          to: ${{ secrets.TELEGRAM_TO }}
+          message: "🔴 Working testing failed:\n
+          *Job*: [ ${{ github.job }} ](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})\n
+          *Logs*: [ ${{ env.JOB_ID }} ](https://github.com/${{ github.repository }}/runs/${{ env.JOB_ID }})\n
+          *Commit*: [ ${{ github.sha }} ](https://github.com/${{ github.repository }}/commit/${{ github.sha }})\n
+          *Branch*: [ ${{ env.BRANCH_NAME }} ](https://github.com/${{ github.repository }}/tree/${{ env.BRANCH_NAME }})\n
+          *History*: [ commits ](https://github.com/${{ github.repository }}/commits/${{ github.sha }})\n
+          *Triggered on*: ${{ github.event_name }}\n
+          *Committer*: ${{ github.actor }}\n
+          ---------------- Commit message -------------------\n
+          *${{ github.event.head_commit.message }}*\n
+          ---------------- Commit message -------------------\n
+          "
+          disable_web_page_preview: true
