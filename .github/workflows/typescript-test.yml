@@ -20,17 +20,11 @@ jobs:
         if: failure()
         with:
           token: ${{ secrets.TELEGRAM_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           to: ${{ secrets.TELEGRAM_TO }}
-          message: "🔴 Working testing failed:\n
-          *Job*: [ ${{ github.job }} ](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})\n
-          *Logs*: [ ${{ env.JOB_ID }} ](https://github.com/${{ github.repository }}/runs/${{ env.JOB_ID }})\n
-          *Commit*: [ ${{ github.sha }} ](https://github.com/${{ github.repository }}/commit/${{ github.sha }})\n
-          *Branch*: [ ${{ env.BRANCH_NAME }} ](https://github.com/${{ github.repository }}/tree/${{ env.BRANCH_NAME }})\n
-          *History*: [ commits ](https://github.com/${{ github.repository }}/commits/${{ github.sha }})\n
-          *Triggered on*: ${{ github.event_name }}\n
-          *Committer*: ${{ github.actor }}\n
-          ---------------- Commit message -------------------\n
-          *${{ github.event.head_commit.message }}*\n
-          ---------------- Commit message -------------------\n
-          "
+          parse_mode: MarkdownV2
           disable_web_page_preview: true
+      - run: |
+          echo ${{ env.BRANCH_NAME }}
+          printenv
+        if: failure()
