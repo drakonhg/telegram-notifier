@@ -8,7 +8,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
       - name: Check Commit SHA
         uses: ./.github/actions/commit-hash-check
         with:
@@ -17,7 +16,7 @@ jobs:
 #        uses: ./.github/actions/configure_github_envs
 #        if: always()
       - name: Sending Message to Telegram Chat
-        uses: ./.github/actions/typescript-telegram-notifier
+        uses: ./.github/actions/typescript-telegram-test
         if: failure()
         with:
           token: ${{ secrets.TELEGRAM_TOKEN }}
