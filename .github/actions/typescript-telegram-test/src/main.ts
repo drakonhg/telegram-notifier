@@ -34,14 +34,14 @@ async function sendMessage(
 
   const message = `🔴 Working testing failed:
   *Job*: [ ${github.context.job} ](https://github.com/${githubData.repository.full_name}/actions/runs/${github.context.runId})
-  *Logs*: [ ${JOB_ID} ](https://github.com/${githubData.repository.full_name}/runs/${JOB_ID})
+  *Logs*: [ #${JOB_ID} ](https://github.com/${githubData.repository.full_name}/runs/${JOB_ID})
   *Commit*: [ ${github.context.sha} ](https://github.com/${githubData.repository.full_name}/commit/${github.context.sha})
   *Branch*: [ ${BRANCH_NAME}](https://github.com/${githubData.repository.full_name}/tree/${BRANCH_NAME})
   *History*: [ commits ](https://github.com/${githubData.repository.full_name}/commits/${github.context.sha})
   *Triggered on*: ${github.context.eventName}
   *Committer*: ${github.context.actor}
   ---------------- Commit message -------------------
-  *${githubData.head_commit}*
+  *${githubData.head_commit?.message}*
   ---------------- Commit message -------------------
   `;
   const url: string = `https://api.telegram.org/bot${botToken}/sendMessage`;
@@ -49,6 +49,7 @@ async function sendMessage(
   const formattedMessage: string = message
     .replace(/\-/gi, "\\-")
     .replace(/\./gi, "\\.")
+    .replace(/\#/gi, "\\#")
     .replace(/\_/gi, "\\_");
   await axios
     .post(url, {
@@ -81,7 +82,7 @@ async function getChatId(branchName: string): Promise<string> {
 async function getBranchName(): Promise<string | undefined> {
   const branchName: string = github.context.ref;
   if (github.context.eventName != "pull_request") {
-    return branchName.split("/").pop();
+    return branchName.split("/heads/").pop();
   }
   return branchName;
 }

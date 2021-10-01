@@ -58,26 +58,28 @@ function run() {
     });
 }
 function sendMessage(botToken, chatId, parseMode, disablePagePreview) {
+    var _a;
     return __awaiter(this, void 0, void 0, function* () {
         const BRANCH_NAME = yield getBranchName();
         const JOB_ID = yield getJobId();
         const githubData = github.context.payload;
         const message = `🔴 Working testing failed:
   *Job*: [ ${github.context.job} ](https://github.com/${githubData.repository.full_name}/actions/runs/${github.context.runId})
-  *Logs*: [ ${JOB_ID} ](https://github.com/${githubData.repository.full_name}/runs/${JOB_ID})
+  *Logs*: [ #${JOB_ID} ](https://github.com/${githubData.repository.full_name}/runs/${JOB_ID})
   *Commit*: [ ${github.context.sha} ](https://github.com/${githubData.repository.full_name}/commit/${github.context.sha})
   *Branch*: [ ${BRANCH_NAME}](https://github.com/${githubData.repository.full_name}/tree/${BRANCH_NAME})
   *History*: [ commits ](https://github.com/${githubData.repository.full_name}/commits/${github.context.sha})
   *Triggered on*: ${github.context.eventName}
   *Committer*: ${github.context.actor}
   ---------------- Commit message -------------------
-  *${githubData.head_commit}*
+  *${(_a = githubData.head_commit) === null || _a === void 0 ? void 0 : _a.message}*
   ---------------- Commit message -------------------
   `;
         const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
         const formattedMessage = message
             .replace(/\-/gi, "\\-")
             .replace(/\./gi, "\\.")
+            .replace(/\#/gi, "\\#")
             .replace(/\_/gi, "\\_");
         yield axios_1.default
             .post(url, {
@@ -110,7 +112,7 @@ function getBranchName() {
     return __awaiter(this, void 0, void 0, function* () {
         const branchName = github.context.ref;
         if (github.context.eventName != "pull_request") {
-            return branchName.split("/").pop();
+            return branchName.split("/heads/").pop();
         }
         return branchName;
     });
